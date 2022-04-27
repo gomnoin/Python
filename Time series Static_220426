@@ -24,3 +24,35 @@ df.head(3)
 #선 차트 그리기
 df.plot(y = 'SK텔레콤', '현대모비스')
 
+#이동평균계산과 선차트 생성
+df['KT_MA'] = df['KT'].rolling(60).mean()
+df.dropna(axis = 0, inplace = True)
+df[['KT','KT_MA']].plot(title = "KT and KT Moving Avg", legend = True)
+
+#수치 자료의 증감률 계산
+import yfinance as yf
+data = yf.download('005380.KS', '2010-01-04', '2019-01-05')
+return_series = data['Close'].pct_change()
+return_series
+
+#주가 일수익률 계산
+data = yf.download('005380.KS', '2010-01-04', '2019-01-05')
+data['Close_return'] = data['Close'].pct_change()
+data.head()
+
+#주가 일수익률 히스토그램 작성
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+stock = 'Hmotors'
+code = '005380.KS'
+start = '2010-01-04'
+end = '2019-01-05'
+
+data = yf.download(code, start, end)
+data['Close_return'] = data['Close'].pct_change()
+data.dropna(axis = 0, inplace = True)
+sns.distplot(data['Close_return'], bins = 100)
+plt.xlabel('Daliy return')
+plt.ylabel('Number of days')
+plt.title('Distribution of '+stock+ ' dailiy returns between '+start+' and '+end)
