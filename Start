@@ -1,0 +1,28 @@
+##라이브러리 설치
+#Anaconda Prompt 관리자 권한 실행
+pip install pymssql --trusted-host pypi.python.org
+
+##라이브러리 불러오기
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as sns
+import seaborn as sns
+import xlwings as xw
+import scipy.stats
+import datetime
+from win32com.client import Dispatch
+excel = Dispatch('Excel Application')
+excel.Visble = True
+
+##글꼴 불러오기
+from matplotlib import font_manager, rc
+font_name = font_manager.FontProperties(fname = "c:/Windows/Fonts/malgun.ttf").get_name()
+rc('font', family = font_name)
+
+#데이터 불러오기
+df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\data.xlsx')
+df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
+
+#Index를 일자로 설정
+df['일자'] = pd.to_datetime(df['일자'])
+df.set_index('일자', inplace = True)
