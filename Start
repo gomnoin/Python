@@ -22,7 +22,3 @@ rc('font', family = font_name)
 #데이터 불러오기
 df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\data.xlsx')
 df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
-
-#Index를 일자로 설정
-df['일자'] = pd.to_datetime(df['일자'])
-df.set_index('일자', inplace = True)
