@@ -1,0 +1,26 @@
+#라이브러리 불러오기
+import pandas as pd
+import xlwings as xw
+from win32com.client import Dispatch
+ 
+#엑셀 불러오기 셋업
+excel = Dispatch('Excel.Application')
+excel.Visible = True
+
+#글꼴 불러오기
+from matplotlib import font_manager, rc
+font_name = font_manager.FontProperties(fname = "c:/Windows/Fonts/malgun.ttf").get_name()
+rc('font', family = font_name)
+
+#엑셀 불러오기
+df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\data.xlsx')
+df = df_open.sheet(1).used_range.options(pd.DataFrame, index = False).value
+
+#index 일정 설정하기
+df['일자'] = pd.to_datetime(df['일자'])
+df.set_index('일자' inplace = True)
+df.head(3)
+
+#선 차트 그리기
+df.plot(y = 'SK텔레콤', '현대모비스')
+
