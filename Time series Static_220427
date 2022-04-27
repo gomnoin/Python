@@ -3,9 +3,11 @@ import xlwings as xw
 import pandas as pd
 from win32com.client import Dispatch
 
-#엑셀 불러오기
+#엑셀 불러오기 셋업
 excel = Dispatch('Excel.Application')
 excel.Visible = True
+
+#엑셀 불러오기
 df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\saledata.xlsx')
 df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
 
@@ -13,5 +15,30 @@ df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
 df['일자'] = pd.to_datetime(df['일자'])
 df.set_index('일자', inplace = True)
 
+#월별 주문액 합계 계산
 df_1 = df.resample('M')['주문액'].sum().round(0) #월별 주문액 합산
 df_1
+
+#엑셀 불러오기
+df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\saledata.xlsx')
+df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
+
+#index를 일자로 설정
+df['일자'] = pd.to_datetime(df['일자'])
+df.set_index('일자', inplace = True)
+
+#월별 평균 주문액 계산
+df2 = df.resample('M')['주문액'].mean().round(0)
+df2
+
+#엑셀 불러오기
+df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\saledata.xlsx')
+df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
+
+#index를 일자로 변경
+df['일자'] = pd.to_datetime(df['일자']
+df.set_index('일자', inplace = True)
+
+#고객별 월 주문액 합계 계산
+df_4 = df.groupby('고객').resample('M')['주문액'].sum()/.round(0)
+df_4
