@@ -1,0 +1,17 @@
+#라이브러리 불러오기
+import xlwings as xw
+import pandas as pd
+from win32com.client import Dispatch
+
+#엑셀 불러오기
+excel = Dispatch('Excel.Application')
+excel.Visible = True
+df_open = xw.Book('C:\Anaconda3\Jupyter\Project01\saledata.xlsx')
+df = df_open.sheets(1).used_range.options(pd.DataFrame, index = False).value
+
+#Index를 일자로 설정
+df['일자'] = pd.to_datetime(df['일자'])
+df.set_index('일자', inplace = True)
+
+df_1 = df.resample('M')['주문액'].sum().round(0) #월별 주문액 합산
+df_1
