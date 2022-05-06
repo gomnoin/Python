@@ -1,0 +1,30 @@
+#주사위를 던질 때 나오는 난수 생성
+
+import numpy as np
+numbers = [1,2,3,4,5,6]
+prob = np.ones(6)*(1/6)
+numbers = np.random.choice(numbers, p = prob)
+numbers
+
+#주사위를 던질 때 나오는 난수들로 구성된 배열 생성
+
+import numpy as np
+numbers = [1,2,3,4,5,6]
+prob = np.ones(6)*(1/6)
+numbers = np.random.choice(numbers, 2, p = prob)
+numbers
+
+#평균 10, 표준편차 1인 정규분포 난수 생성
+import numpy as np
+epsilon = np.random.normal(10,1)
+epsilon
+
+#평균 10, 표준편차 1인 정규분포 난수 배열 생성
+import numpy as np
+epsilon = np.random.normal(10,1,5)
+epsilon
+
+#표준정규분포 난수 배열 생성
+import numpy as np
+epsilon = np.random.normal(5)
+epsilon
