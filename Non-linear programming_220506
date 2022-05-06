@@ -1,0 +1,20 @@
+#최소분산 포트폴리오 탐색 1
+
+import numpy as np
+H = np.array([[0.0275, 0.00125, 0.00425], [0.00125, 0.083, 0.01125], [0.00425, 0.01125, 0.092]])
+w = np.array([0.3, 0.5, 0.2])
+var = np.dot(np.dot(w,H),w)
+print(format (var, ",.4f"))
+
+
+#최소분산 포트폴리오 탐색 2
+import pandas as pd
+import numpy as np
+from scipy.optimize import minimize
+H = np.array([[0.0275, 0.00125, 0.00425], [0.00125, 0.083, 0.01125], [0.00425, 0.01125, 0.092]])
+dim = len(H)
+var = lambda x: np.dot(np.dot(x,H),x)
+cons = {'type':'eq', 'fun':lambda x: np.sum(x)-1}
+x0 = np.ones(dim)*(1/dim)
+globalminport = minimize(var, x0, constraints = cons)
+print(globalminport)
